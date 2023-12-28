@@ -1,6 +1,6 @@
 // Registrar la entrada por parte del usuario
 
-let busquedaUsuario = prompt("¿Qué quieres buscar?");
+let busquedaUsuario = prompt("¿Qué persona buscas?");
 
 // Crear el array con los objetos de personas
 
