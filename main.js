@@ -1,36 +1,81 @@
-alert("Eres capaz de adivinar el número secreto ¡vamos a ver si lo logras!");
+// Registrar la entrada por parte del usuario
 
-let numeroIngresado = parseInt(prompt("ingresa un número entre 1 y 100"));
+let busquedaUsuario = prompt("¿Qué quieres buscar?");
 
-const numeroMenorMayor = (a, b) => numeroIngresado <= a && numeroIngresado >= b;
+// Crear el array con los objetos de personas
 
-const filtroNumero = (a, b, c, d, e, f, g, h, i, j) => {
-
-    if (numeroMenorMayor(a, b) || numeroMenorMayor(c, d)) {
-        alert(`¡CALIENTE! estas muy cerca, pero, ese aun no es el número`);
-    } else if (numeroMenorMayor(e, f) || numeroMenorMayor(g, h)) {
-        alert(`¡TIBIO! estas algo lejos, pero no tanto para encontrarlo`);
-    } else if (numeroMenorMayor(i, j)) {
-        alert(`¡FRÍO! te estas congelando de lo lejos que estas del número secreto`);
-    } else {
-        alert(`¡CONGELADO! ese número esta fuera del rango del número secreto`);
+const resultadosDeBusqueda = [
+    {
+        nombre: "Yessica", apellido: "Gonzalez", edad: 20
+    },
+    {
+        nombre: "Haider", apellido: "Pereira", edad: 25
+    },
+    {
+        nombre: "Andres", apellido: "Muñoz", edad: 29
+    },
+    {
+        nombre: "Yessica", apellido: "Ordoñez", edad: 50
+    },
+    {
+        nombre: "Javier", apellido: "Perez", edad: 25
+    },
+    {
+        nombre: "Yesenia", apellido: "Munevar", edad: 29
+    },
+    {
+        nombre: "Andrea", apellido: "Ortiz", edad: 15
     }
+];
 
+
+// Función para buscar el objeto que necesita el usuario
+
+const busquedaArray = () => {
+    return resultadosDeBusqueda.filter(persona => {
+        const nombreMinuscula = persona.nombre.toLowerCase();
+        const apellidoMinuscula = persona.apellido.toLowerCase();
+        const busquedaResultadoMinuscula = busquedaUsuario.toLowerCase();
+        // Relacionar la búsqueda de los usuarios con los nombres de los objetos
+        return nombreMinuscula.includes(busquedaResultadoMinuscula) || apellidoMinuscula.includes(busquedaResultadoMinuscula);
+    }
+    );
 }
 
-while (numeroIngresado !== null && numeroIngresado !== NaN) {
+// Resultado del Array filtrado
+let resultado = busquedaArray();
 
-    if (numeroIngresado === 72) {
+// Validar la existencia del objeto en el array y que no escriba vacío
+while (resultado.length === 0 || busquedaUsuario.trim() === "") {
+    busquedaUsuario = prompt("La persona no existe, Escribe otro nombre");
 
-        alert(`¡EXCELENTE! ${numeroIngresado} era el número secreto`);
-        break;
-
-    } else {
-
-        filtroNumero(71, 66, 77, 73, 65, 56, 87, 74, 100, 1);
-
-    }
-
-    numeroIngresado = parseInt(prompt("Intenta con otro número"));
-
+    resultado = busquedaArray();
 }
+
+const mostrarResultado = () => {
+    // Con map, crear nuevo array de los resultados y unificarlos con join
+
+    const nombresArray = resultado.map((persona, indice) => {
+        return `${indice + 1}. ${persona.nombre} ${persona.apellido}`
+    });
+
+    // Seleccionar el usuario que busca
+    const seleccionUsuario = parseInt(prompt("Los resultados son: \n" + nombresArray.join("\n") + "\n ¿De que persona quieres conocer más?"));
+
+    // Retorno del objeto seleccionado por el usuario 
+    return resultado[seleccionUsuario - 1];
+
+};
+
+
+const personaSeleccionada = mostrarResultado();
+
+// Definir el año actual
+const anio = new Date().getFullYear();
+
+// Finaliza el proceso mostrandole al usuario el usuario selecionado
+alert(`La persona seleccionada es ${personaSeleccionada.nombre} ${personaSeleccionada.apellido} tiene ${personaSeleccionada.edad} años y nació el ${anio - personaSeleccionada.edad}`);
+
+
+
+
